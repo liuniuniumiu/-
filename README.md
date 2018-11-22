@@ -1,4 +1,4 @@
 from niuniu import ke'ai
-print('niuniu的第一个交友贴')
+print('来自并夕夕的交友贴')
 while(True):
-  print('hey,you're cool!')
+  print('hey,we're bingxixi!!!')
