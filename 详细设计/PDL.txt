@@ -1,0 +1,99 @@
+1.登入过程
+
+IF 已经注册 THEN
+  IF 进行客户登入 THEN
+    CALL 核对信息
+  ELSE （进行管理员登入）
+    CALL 核对信息
+  ENDIF
+ELSE (进行注册)
+  IF 用户信息存在 THEN
+    显示已存在，并提示重新输入
+  ELSE 
+    载入新用户
+    CALL 核对信息
+  ENDIF
+ENDIF
+
+1.1核对信息
+
+读入相关信息
+IF 核对信息正确 THEN
+  进入相关模块
+ELSE
+  显示错误
+ENDIF
+
+2.用户模块
+
+CASE 选择功能 OF 个人信息，购物车，消费记录，搜索商品，支付
+{
+  个人信息:显示个人信息
+                IF 受到修改指令 THEN
+                  进入编辑模式
+                  修改信息
+                  IF 修改完成 THEN
+                    退出编辑模式
+                  ENDIF
+                ENDIF
+  购物车:显示已添加的商品
+             IF 受到购买指令 THEN 
+               读入支付密码
+               IF 信息正确 THEN
+                 支付成功，添加订单信息
+               ELSE
+                 支付失败，显示错误
+               ENDIF
+             ELSE （收到删除指令）
+               删除商品记录
+             ENDIF
+  消费记录:显示消费记录
+  搜索商品:选择搜索方式
+                IF 随机浏览 THEN
+                  显示商品信息
+                  IF 选择购买 THEN
+                    将产品信息加入购物车
+                  ENDIF
+                ELSE （搜索特定商品）
+                  读入商品信息并查询
+                  IF 商品存在 THEN
+                    显示查询结果
+                    IF 选择购买 THEN
+                      将产品信息加入购物车
+                    ENDIF
+                  ELSE （商品不存在）
+                    显示错误
+                  ENDIF
+                ENDIF
+  支付:读入支付宝信息
+          IF 信息正确 THEN
+            充值成功
+          ELSE
+            充值失败
+          ENDIF
+  错误:提示错误信息
+}
+ENDCASE
+
+3.管理员模块
+
+IF 选择商品管理 THEN
+  CASE 选择 OF 修改价格，删除商品，补充库存
+  {
+    修改价格:修改商品价格
+    删除商品:删除商品信息
+    补充库存:IF 选择添加商品种类 THEN
+                    添加新商品相关信息
+                  ELSE （选择添加商品数量）
+                    修改已有商品数量
+                  ENDIF 
+    错误:显示错误
+  }
+  ENDCASE
+ELSE (选择订单处理)
+  IF 收到购买申请 THEN
+    确认发货
+  ENDIF
+ENDIF
+
+   
